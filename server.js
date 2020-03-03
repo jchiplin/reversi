@@ -17,13 +17,13 @@ if(typeof port == 'undefined' || !port){
 var file = new static.Server(directory);
 //construct an http server that gets files from file server
 var app = http.createServer(
-	function(request, response){
-		request.addListener('end', 
-			function(){
-				file.serve(request,response);
-			}
-		).resume();
-	}
-).listen(port);
+		function(request, response){
+			request.addListener('end', 
+				function(){
+					file.serve(request,response);
+				}
+			).resume();
+		}
+	).listen(port);
 
 console.log('The Server is running');
