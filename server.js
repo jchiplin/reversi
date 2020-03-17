@@ -216,3 +216,4 @@ io.sockets.on('connection', function(socket) {
    });
 
 });
+//i hate this
