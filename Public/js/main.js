@@ -1,5 +1,5 @@
 /* functions for general use */
-
+//comment
 /* This function returns the value associated with 'whichParam' on the URL */
 function getURLParameters(whichParam) {
   var pageURL = window.location.search.substring(1);

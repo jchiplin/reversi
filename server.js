@@ -1,7 +1,7 @@
 /***************************************/
 /* Set up the static file server */
 /* Include the static file webserver library */
-
+//comment
 
 /* Include the static file webserver library */
 var static = require('node-static');
