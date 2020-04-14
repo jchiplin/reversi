@@ -1,7 +1,7 @@
 /***************************************/
 /* Set up the static file server */
 /* Include the static file webserver library */
-//comments
+
 
 /* Include the static file webserver library */
 var static = require('node-static');
@@ -169,7 +169,7 @@ players[socket.id].room = room;
     if('undefined' !== typeof players[socket.id] && players[socket.id]){
       var username = players[socket.id].username;
       var room = players[socket.id].room;
-      var payload = {
+      var paylod = {
                       username: username,
                       socket_id: socket.id
                     };
