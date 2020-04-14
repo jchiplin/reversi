@@ -16,7 +16,7 @@ var directory = __dirname + '/public';
 /* If we aren't on Heroku, then we need to readjust the port and directory
 information and we know that because port won't be set */
 if (typeof port == 'undefined' ||  !port) {
-  director = './public';
+  directory = './public';
   port = 8080;
 }
 
@@ -169,7 +169,7 @@ players[socket.id].room = room;
     if('undefined' !== typeof players[socket.id] && players[socket.id]){
       var username = players[socket.id].username;
       var room = players[socket.id].room;
-      var paylod = {
+      var payload = {
                       username: username,
                       socket_id: socket.id
                     };

@@ -1,4 +1,4 @@
-/* functions for general use */
+/* Functions for general use */
 
 /* This function returns the value associated with 'whichParam' on the URL */
 function getURLParameters(whichParam) {
@@ -98,11 +98,6 @@ else{
   $('#messages').append(newNode);
   newNode.slideDown(1000);
 });
-
-
-
-
-
 
 
 /*What to do when the server says that someone has left a room */
