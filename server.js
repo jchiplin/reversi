@@ -169,7 +169,7 @@ players[socket.id].room = room;
     if('undefined' !== typeof players[socket.id] && players[socket.id]){
       var username = players[socket.id].username;
       var room = players[socket.id].room;
-      var paylod = {
+      var payload = {
                       username: username,
                       socket_id: socket.id
                     };
