@@ -312,6 +312,7 @@ var old_board = [
                   ];
 
 var my_color = ' ';
+var interval_timer;
 
 socket.on('game_update',function(payload){
   console.log('*** Client Log Message: \'game_update\'\n\tpayload: '+JSON.stringify(payload));
@@ -331,9 +332,11 @@ socket.on('game_update',function(payload){
   /* update my color */
   if(socket.id == payload.game.player_ice.socket){
     my_color = 'ice';
+    my_color_move = 'w';
   }
   else if(socket.id == payload.game.player_fire.socket){
      my_color = 'fire';/*changed from white to black*/
+     my_color_move = 'b';
   }
   else{
     /*something weird is going on, like three people playing at once */
@@ -342,6 +345,27 @@ socket.on('game_update',function(payload){
   }
   
   $('#my_color').html('<h3 id="my_color">I am '+my_color+'</h3>');
+  $('#my_color').append('<h4>It is '+payload.game.whose_turn+'\'s turn. Elapsed time <span id="elapsed"></span></h4>');
+ 
+ clearInterval(interval_timer);
+ interval_timer = setInterval(function(last_time){
+  return function(){
+    /*do the work of updating the UI*/
+    var d = new Date();
+    var elapsedmilli = d.getTime() - last_time;
+    var minutes = Math.floor((elapsedmilli / (60 *1000)));
+    var seconds = Math.floor((elapsedmilli % (60 *1000)) / 1000);
+
+    //think wrong amount of + stupid
+    if (seconds < 10){
+      $('#elapsed').html(minutes+':0'+seconds);
+    }
+    else{
+      $('#elapsed').html(minutes+':'+seconds);
+    }
+
+  }}(payload.game.last_move_time) 
+  , 1000);
 
   /*animate changes to the board*/
   var blacksum = 0;
@@ -387,10 +411,14 @@ socket.on('game_update',function(payload){
         else{
           $('#'+row+'_'+column).html('<img src="assets/images/error.gif" alt="error"/>');
         }
+      }
 
-        /* Set up interactivity */
-        $('#'+row+'_'+column).off('click');
-        if(board[row][column] == ' '){
+      /* Set up interactivity */
+      $('#'+row+'_'+column).off('click');
+      $('#'+row+'_'+column).removeClass('hovered_over');
+
+      if(payload.game.whose_turn === my_color){
+        if(payload.game.legal_moves[row][column] === my_color_move.substr(0,1)){
           $('#'+row+'_'+column).addClass('hovered_over');
           $('#'+row+'_'+column).click(function(r,c){
             return function(){
@@ -402,10 +430,6 @@ socket.on('game_update',function(payload){
               socket.emit('play_token',payload);
             };
           }(row,column));
-
-        }
-        else{
-          $('#'+row+'_'+column).removeClass('hovered_over');
         }
 
       }
