@@ -329,10 +329,10 @@ socket.on('game_update',function(payload){
     return;
   }
   /* update my color */
-  if(socket.id == payload.game.player_white.socket){
+  if(socket.id == payload.game.player_ice.socket){
     my_color = 'ice';
   }
-  else if(socket.id == payload.game.player_black.socket){
+  else if(socket.id == payload.game.player_fire.socket){
      my_color = 'fire';/*changed from white to black*/
   }
   else{

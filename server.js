@@ -638,7 +638,7 @@ players[socket.id].room = room;
                   return;
                 }
                  var color = payload.color;
-                if(('undefined' === typeof color) || !color || (color != 'white' && color != 'black')) {
+                if(('undefined' === typeof color) || !color || (color != 'ice' && color != 'fire')) {
                   var error_message = 'play_token did not specify a valid color';
                   log(error_message);
                   socket.emit('play_token_response', {
@@ -663,13 +663,13 @@ players[socket.id].room = room;
                 socket.emit('play_token_response',success_data);
 
                 /*execute move*/
-                if(color == 'white'){
+                if(color == 'ice'){
                   game.board[row][column] = 'w';
-                  game.whose_turn = 'black';
+                  game.whose_turn = 'fire';
                 }
-                else if(color == 'black'){
+                else if(color == 'fire'){
                   game.board[row][column] = 'b';
-                  game.whose_turn = 'white';
+                  game.whose_turn = 'ice';
                 }
 
                 var d = new Date();
@@ -686,17 +686,17 @@ var games = [];
 
 function create_new_game(){
   var new_game = {};
-  new_game.player_white = {};
-  new_game.player_black = {};
-  new_game.player_white.socket = '';
-  new_game.player_white.username = '';
-  new_game.player_black.socket = '';
-  new_game.player_black.username = '';
+  new_game.player_ice = {};
+  new_game.player_fire = {};
+  new_game.player_ice.socket = '';
+  new_game.player_ice.username = '';
+  new_game.player_fire.socket = '';
+  new_game.player_fire.username = '';
 
   var d = new Date();
   new_game.last_move_time = d.getTime();
 
-  new_game.whose_turn = 'white';
+  new_game.whose_turn = 'ice';
 
   new_game.board = [
                     [' ',' ',' ',' ',' ',' ',' ',' '],
@@ -731,13 +731,13 @@ function send_game_update(socket, game_id, message){
     numClients = roomObject.length;
     if(numClients > 2){
       console.log('Too many clients in room: '+game_id+' #: '+numClients);
-      if(games[game_id].player_white.socket == roomObject.sockets[0]){
-        games[game_id].player_white.socket = '';
-        games[game_id].player_white.username = '';
+      if(games[game_id].player_ice.socket == roomObject.sockets[0]){
+        games[game_id].player_ice.socket = '';
+        games[game_id].player_ice.username = '';
       }
-      if(games[game_id].player_black.socket == roomObject.sockets[0]){
-        games[game_id].player_black.socket = '';
-        games[game_id].player_black.username = '';
+      if(games[game_id].player_fire.socket == roomObject.sockets[0]){
+        games[game_id].player_fire.socket = '';
+        games[game_id].player_fire.username = '';
       }
       /*kick one of the extra people out*/
       var sacrifice = Object.keys(roomObject.sockets)[0];
@@ -748,29 +748,29 @@ function send_game_update(socket, game_id, message){
   while((numClients-1) > 2);
   /*assign this socket a color */
   /*if the current players not assigned a color*/
-  if((games[game_id].player_white.socket != socket.id) && (games[game_id].player_black.socket != socket.id)){
+  if((games[game_id].player_ice.socket != socket.id) && (games[game_id].player_fire.socket != socket.id)){
     console.log('Player is not assigned color: '+socket.id);
     /*and there isnt a color to give them*/
-    if((games[game_id].player_black.socket != '') && (games[game_id].player_white.socket != '')){
-        games[game_id].player_white.socket = '';
-        games[game_id].player_white.username = '';
-        games[game_id].player_black.socket = '';
-        games[game_id].player_black.username = '';
+    if((games[game_id].player_fire.socket != '') && (games[game_id].player_ice.socket != '')){
+        games[game_id].player_ice.socket = '';
+        games[game_id].player_ice.username = '';
+        games[game_id].player_fire.socket = '';
+        games[game_id].player_fire.username = '';
 
     }
   }
   /*assign colors to players if not already done */
-  if(games[game_id].player_white.socket == ''){
-    if(games[game_id].player_black.socket != socket.id){
-      games[game_id].player_white.socket = socket.id;
-      games[game_id].player_white.username = players[socket.id].username;
+  if(games[game_id].player_ice.socket == ''){
+    if(games[game_id].player_fire.socket != socket.id){
+      games[game_id].player_ice.socket = socket.id;
+      games[game_id].player_ice.username = players[socket.id].username;
 
     }
   }
-  if(games[game_id].player_black.socket == ''){
-    if(games[game_id].player_white.socket != socket.id){
-      games[game_id].player_black.socket = socket.id;
-      games[game_id].player_black.username = players[socket.id].username;
+  if(games[game_id].player_fire.socket == ''){
+    if(games[game_id].player_ice.socket != socket.id){
+      games[game_id].player_fire.socket = socket.id;
+      games[game_id].player_fire.username = players[socket.id].username;
 
     }
   }
