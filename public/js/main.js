@@ -331,11 +331,11 @@ socket.on('game_update',function(payload){
   }
   /* update my color */
   if(socket.id == payload.game.player_ice.socket){
-    my_color = 'ice';
+    my_color = 'white';
     my_color_move = 'w';
   }
   else if(socket.id == payload.game.player_fire.socket){
-     my_color = 'fire';/*changed from white to black*/
+     my_color = 'black';/*changed from white to black*/
      my_color_move = 'b';
   }
   else{
