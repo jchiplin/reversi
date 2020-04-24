@@ -348,7 +348,7 @@ socket.on('game_update',function(payload){
   $('#my_color').append('<h4>It is '+payload.game.whose_turn+'\'s turn. Elapsed time <span id="elapsed"></span></h4>');
  
  clearInterval(interval_timer);
- interval_timer = setInterval(function(last_time){
+ interval_timer = setInterval( function(last_time){
   return function(){
     /*do the work of updating the UI*/
     var d = new Date();
@@ -451,7 +451,7 @@ socket.on('play_token_response',function(payload){
     return;
 }
 });
-
+//ugh
 
 
 socket.on('game_over',function(payload){
