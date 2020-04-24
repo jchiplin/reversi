@@ -353,7 +353,7 @@ socket.on('game_update',function(payload){
     /*do the work of updating the UI*/
     var d = new Date();
     var elapsedmilli = d.getTime() - last_time;
-    var minutes = Math.floor((elapsedmilli / (60 *1000)));
+    var minutes = Math.floor(elapsedmilli / (60 *1000));
     var seconds = Math.floor((elapsedmilli % (60 *1000)) / 1000);
 
     //think wrong amount of + stupid
