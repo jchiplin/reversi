@@ -330,10 +330,10 @@ socket.on('game_update',function(payload){
   }
   /* update my color */
   if(socket.id == payload.game.player_white.socket){
-    my_color = 'white';
+    my_color = 'ice';
   }
   else if(socket.id == payload.game.player_black.socket){
-     my_color = 'black';/*changed from white to black*/
+     my_color = 'fire';/*changed from white to black*/
   }
   else{
     /*something weird is going on, like three people playing at once */
